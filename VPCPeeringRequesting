@@ -1,0 +1,39 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Create VPC Peering connection using the PeerRole to accept.",
+  "Parameters": {
+    "PeerVPCAccountId": {
+    "Default": "##PeerRequesterAccountId##",
+      "Type": "String"
+    },
+    "PeerVPCId": {
+    "Default": "##PeerVPCId##",
+      "Type": "String"
+    },
+    "PeerRoleArn": {
+    "Default": "##PeerRoleArn##",
+      "Type": "String"
+    },
+    "VPC": {
+    "Default": "##VPCId##",
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "vpcPeeringConnection": {
+      "Type": "AWS::EC2::VPCPeeringConnection",
+      "Properties": {
+        "VpcId":{"Ref" : "VPC"},
+        "PeerVpcId": {"Ref" : "PeerVPCId"},
+        "PeerOwnerId": {"Ref" : "PeerVPCAccountId"},
+        "PeerRoleArn": {"Ref" : "PeerRoleArn"},
+        "PeerRegion": "us-east-1"
+      }
+    }
+  },
+  "Outputs": {
+    "VPCPeeringConnectionId": {
+      "Value": "vpcPeeringConnection"
+    }
+  }
+}
